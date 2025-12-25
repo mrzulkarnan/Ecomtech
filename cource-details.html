@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>E-Comm Tech – Professional Skills for a Digital Future</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0052cc;
+      --primary-dark: #003c99;
+      --accent: #ff7a00;
+      --light: #f5f7fa;
+      --dark: #111;
+      --radius: 12px;
+      --transition: .3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ----------  NEW MOBILE-FIRST NAVBAR  ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .logo-wrap .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--primary)
+    }
+
+    .logo-wrap .tagline {
+      font-size: .7rem;
+      color: #666
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%
+    }
+
+    .user-menu {
+      position: relative
+    }
+
+    .user-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+
+    .user-dropdown {
+      position: absolute;
+      right: 0;
+      top: 110%;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+      border-radius: var(--radius);
+      padding: .5rem 0;
+      min-width: 140px;
+      display: none;
+      animation: fadeUp .3s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        transform: translateY(10px);
+        opacity: 0
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1
+      }
+    }
+
+    .user-dropdown.show {
+      display: block
+    }
+
+    .user-dropdown a,
+    .logout-btn {
+      display: block;
+      padding: .5rem 1rem;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: .9rem;
+      color: var(--dark)
+    }
+
+    .logout-btn:hover,
+    .user-dropdown a:hover {
+      background: var(--light)
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      background: var(--primary);
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .hamburger:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      inset: 0 0 0 auto;
+      width: 280px;
+      background: #fff;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, .15);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      transform: translateX(100%);
+      transition: transform var(--transition);
+      z-index: 1001;
+    }
+
+    .mobile-drawer.open {
+      transform: translateX(0)
+    }
+
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .mobile-drawer-logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .close-drawer {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .close-drawer:hover {
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    .mobile-drawer a {
+      margin: .8rem 0;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: .5rem 0;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .mobile-drawer a:hover {
+      background: var(--light);
+      color: var(--primary);
+      padding-left: .5rem;
+    }
+
+    .mobile-user {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    .mobile-user > div {
+      margin-top: .5rem;
+    }
+
+    .mobile-user a,
+    .mobile-user .logout-btn {
+      padding: .4rem 0;
+      font-size: .9rem;
+    }
+
+    @media(max-width:900px) {
+      .nav-links {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+    }
+
+    /* ----------  HERO  ---------- */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+      gap: 2rem;
+      min-height: 80vh;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary-dark)
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #444
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: .7rem 1.8rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition)
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark)
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: .7rem 1.8rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition)
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: #fff
+    }
+
+    .hero-img img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: var(--radius)
+    }
+
+    @media(max-width:900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 3rem 1.5rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+    }
+
+    @media(max-width: 480px) {
+      .hero-text h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-text p {
+        font-size: 1rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
+      }
+    }
+
+    /* ----------  FEATURES  ---------- */
+    .features {
+      background: #fff;
+      padding: 4rem 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 2rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .05)
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 1rem
+    }
+
+    .feature-card h3 {
+      margin-bottom: .5rem;
+      font-size: 1.1rem
+    }
+
+    .feature-card p {
+      font-size: .85rem;
+      color: #555
+    }
+
+    @media(max-width: 600px) {
+      .features {
+        padding: 3rem 0;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1.5rem;
+      }
+    }
+
+    /* ----------  20 COURSES  ---------- */
+    .courses-section {
+      padding: 4rem 0;
+      background: var(--light);
+    }
+
+    .courses-section h2 {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-size: 2rem;
+      color: var(--primary-dark);
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 2rem;
+    }
+
+    .course-card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .08)
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover
+    }
+
+    .course-body {
+      padding: 1.2rem 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1
+    }
+
+    .course-body h3 {
+      margin-bottom: .3rem;
+      font-size: 1.05rem
+    }
+
+    .course-body>p {
+      font-size: .8rem;
+      margin-bottom: .6rem;
+      flex: 1
+    }
+
+    .meta {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      margin-bottom: .6rem;
+      font-size: .7rem;
+      color: #555
+    }
+
+    .meta span {
+      background: var(--light);
+      padding: .25rem .6rem;
+      border-radius: 20px
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: .5rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      margin-top: auto;
+      font-size: .8rem
+    }
+
+    .btn:hover {
+      background: var(--primary-dark)
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: .2rem .6rem;
+      border-radius: 20px;
+      font-size: .65rem;
+      font-weight: 600;
+      margin-bottom: .4rem
+    }
+
+    @media(max-width: 768px) {
+      .courses-section {
+        padding: 3rem 0;
+      }
+      
+      .course-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1.5rem;
+      }
+      
+      .courses-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    /* ----------  CTA  ---------- */
+    .cta {
+      background: var(--primary);
+      color: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem
+    }
+
+    .cta p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--primary);
+      padding: .7rem 1.8rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition)
+    }
+
+    .btn-white:hover {
+      background: var(--light)
+    }
+
+    @media(max-width: 600px) {
+      .cta {
+        padding: 3rem 1.5rem;
+      }
+      
+      .cta h2 {
+        font-size: 1.8rem;
+      }
+      
+      .cta p {
+        font-size: 1rem;
+      }
+    }
+
+    /* ----------  FOOTER  ---------- */
+    footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 3rem 0 1rem
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 2rem
+    }
+
+    .footer-grid h4 {
+      margin-bottom: .8rem;
+      font-size: 1rem
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      line-height: 2
+    }
+
+    .footer-grid a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color var(--transition)
+    }
+
+    .footer-grid a:hover {
+      color: var(--accent)
+    }
+
+    .social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem
+    }
+
+    .social a {
+      color: #fff;
+      font-size: 1.2rem;
+      transition: color var(--transition)
+    }
+
+    .social a:hover {
+      color: var(--accent)
+    }
+
+    .footer-bar {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: .8rem;
+      color: #aaa;
+      border-top: 1px solid #333;
+      padding-top: 1rem;
+      max-width: 1200px;
+      margin: auto
+    }
+
+    @media(max-width: 600px) {
+      footer {
+        padding: 2rem 0 1rem;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1.5rem;
+      }
+    }
+
+    /* ----------  OVERLAY FOR MOBILE DRAWER  ---------- */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media(max-width: 900px) {
+      .drawer-overlay {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =================  HEADER  ================= -->
+  <header>
+    <div class="nav">
+      <div class="logo-wrap">
+        <div class="logo">E-Comm Tech</div>
+        <div class="tagline">Professional Skills for a Digital Future</div>
+      </div>
+      <nav class="nav-links">
+        <a href="dashboard.html">Home</a>
+        <a href="cource-details.html">Courses</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <div class="user-menu">
+          <button class="user-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+            <i class="fa-solid fa-circle-user"></i> User Name <i class="fa-solid fa-caret-down"></i>
+          </button>
+          <div class="user-dropdown">
+            <a href="#">Profile</a>
+            <form method="POST" action="#" style="margin:0;">
+              <button type="submit" class="logout-btn">Log Out</button>
+            </form>
+          </div>
+        </div>
+        <a href="applynowpage.html" class="btn">Apply Now</a>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+    
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <div class="mobile-drawer-logo">E-Comm Tech</div>
+        <button class="close-drawer" id="closeDrawer">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <a href="dashboard.html" onclick="closeDrawer()">Home</a>
+      <a href="cource-details.html" onclick="closeDrawer()">Courses</a>
+      <a href="services.html" onclick="closeDrawer()">Services</a>
+      <a href="about.html" onclick="closeDrawer()">About</a>
+      <a href="contact.html" onclick="closeDrawer()">Contact</a>
+      <a href="applynowpage.html" onclick="closeDrawer()">Apply Now</a>
+      <div class="mobile-user">
+        <div><i class="fa-solid fa-circle-user"></i> User Name</div>
+        <div>
+          <a href="#">Profile</a>
+          <form method="POST" action="#" style="margin:0;">
+            <button type="submit" class="logout-btn">Log Out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer Overlay -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <!-- =================  HERO  ================= -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h1>Learn the Skills That Pay the Bills</h1>
+      <p>From IELTS mastery to Amazon FBA, our expert-led courses open doors to global careers and online income.</p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn-primary">Explore Courses</a>
+        <a href="#about" class="btn-secondary">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60" alt="Students learning">
+    </div>
+  </section>
+
+  <!-- =================  FEATURES  ================= -->
+  <section class="features">
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h3>Expert Instructors</h3>
+        <p>Certified trainers with real-world industry experience.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-clock"></i>
+        <h3>Flexible Timings</h3>
+        <p>Weekday & weekend batches to fit your schedule.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-handshake"></i>
+        <h3>Job Placement</h3>
+        <p>CV workshops and interview prep with hiring partners.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-globe"></i>
+        <h3>Online & On-site</h3>
+        <p>Attend from home or at our Lahore campus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================  20 COURSES  ================= -->
+  <section id="courses" class="courses-section">
+    <h2>All Courses</h2>
+    <div class="course-grid">
+      <!-- Courses 1-20 (same as before) -->
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1599658880436-c61792e56ff9?auto=format&fit=crop&w=800&q=60" alt="IELTS">
+        <div class="course-body">
+          <span class="badge">Most Popular</span>
+          <h3>IELTS Preparation</h3>
+          <p>8-week intensive coaching for Academic & General modules with mock tests.</p>
+          <div class="meta"><span>📆 8 weeks</span><span>💷 £240</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=60" alt="LanguageCert">
+        <div class="course-body">
+          <span class="badge">UKVI Approved</span>
+          <h3>LanguageCert (UK Approved)</h3>
+          <p>4–6-week program for internationally recognized English certification.</p>
+          <div class="meta"><span>📆 4–6 weeks</span><span>💷 £180</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=60" alt="Amazon FBA">
+        <div class="course-body">
+          <span class="badge">High ROI</span>
+          <h3>Amazon FBA Private Label</h3>
+          <p>Start a UK/US Amazon store from scratch with product-research frameworks.</p>
+          <div class="meta"><span>📆 10 weeks</span><span>💷 £350</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=60" alt="Digital Marketing">
+        <div class="course-body">
+          <span class="badge">Trending</span>
+          <h3>Digital Marketing Masterclass</h3>
+          <p>SEO, Google Ads, Meta Ads & analytics for freelancers & agencies.</p>
+          <div class="meta"><span>📆 6 weeks</span><span>💷 £220</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4e9848?auto=format&fit=crop&w=800&q=60" alt="Web Development">
+        <div class="course-body">
+          <span class="badge">Beginner Friendly</span>
+          <h3>Full-Stack Web Development</h3>
+          <p>HTML, CSS, JavaScript, React & Node.js from zero to deploy.</p>
+          <div class="meta"><span>📆 12 weeks</span><span>💷 £380</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=60" alt="Graphic Design">
+        <div class="course-body">
+          <span class="badge">Creative</span>
+          <h3>Graphic Design Pro</h3>
+          <p>Photoshop, Illustrator & Canva for social-media & print assets.</p>
+          <div class="meta"><span>📆 5 weeks</span><span>💷 £160</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=60" alt="Video Editing">
+        <div class="course-body">
+          <span class="badge">In Demand</span>
+          <h3>Video Editing with Premiere Pro</h3>
+          <p>Edit YouTube & TikTok videos, color grade & add motion graphics.</p>
+          <div class="meta"><span>📆 4 weeks</span><span>💷 £150</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=60" alt="Data Analytics">
+        <div class="course-body">
+          <span class="badge">High Pay</span>
+          <h3>Data Analytics with Excel & Power BI</h3>
+          <p>Clean, visualize & build dashboards for business decisions.</p>
+          <div class="meta"><span>📆 6 weeks</span><span>💷 £240</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=60" alt="Cybersecurity">
+        <div class="course-body">
+          <span class="badge">Security</span>
+          <h3>Cybersecurity Fundamentals</h3>
+          <p>Network security, ethical hacking & incident response basics.</p>
+          <div class="meta"><span>📆 8 weeks</span><span>💷 £320</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=60" alt="WordPress">
+        <div class="course-body">
+          <span class="badge">Quick Start</span>
+          <h3>WordPress E-Commerce Store</h3>
+          <p>Build WooCommerce shops with payment & shipping plugins.</p>
+          <div class="meta"><span>📆 3 weeks</span><span>💷 £120</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=60" alt="HR">
+        <div class="course-body">
+          <span class="badge">Corporate</span>
+          <h3>HR Analytics & Payroll</h3>
+          <p>Manage attendance, salaries & compliance with modern tools.</p>
+          <div class="meta"><span>📆 4 weeks</span><span>💷 £180</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=60" alt="Accounting">
+        <div class="course-body">
+          <span class="badge">Finance</span>
+          <h3>QuickBooks Accounting</h3>
+          <p>Bookkeeping, invoicing & VAT filing for SMEs.</p>
+          <div class="meta"><span>📆 5 weeks</span><span>💷 £200</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1581093458791-9d2fb0d6c7c0?auto=format&fit=crop&w=800&q=60" alt="Content Writing">
+        <div class="course-body">
+          <span class="badge">Freelance</span>
+          <h3>Content Writing & Blogging</h3>
+          <p>SEO articles, affiliate posts & copywriting techniques.</p>
+          <div class="meta"><span>📆 4 weeks</span><span>💷 £140</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=60" alt="Virtual Assistant">
+        <div class="course-body">
+          <span class="badge">Remote</span>
+          <h3>Virtual Assistant Mastery</h3>
+          <p>Email, calendar & client support for Amazon & Shopify.</p>
+          <div class="meta"><span>📆 3 weeks</span><span>💷 £110</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=60" alt="Photography">
+        <div class="course-body">
+          <span class="badge">Creative</span>
+          <h3>Product Photography</h3>
+          <p>Light-box setup & editing for Amazon & Etsy listings.</p>
+          <div class="meta"><span>📆 2 weeks</span><span>💷 £90</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?auto=format&fit=crop&w=800&q=60" alt="Email Marketing">
+        <div class="course-body">
+          <span class="badge">ROI</span>
+          <h3>Email Marketing with Mailchimp</h3>
+          <p>Build lists, automate funnels & A/B test campaigns.</p>
+          <div class="meta"><span>📆 3 weeks</span><span>💷 £120</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=800&q=60" alt="Mobile App">
+        <div class="course-body">
+          <span class="badge">Tech</span>
+          <h3>Flutter Mobile Apps</h3>
+          <p>Build iOS & Android apps with a single codebase.</p>
+          <div class="meta"><span>📆 10 weeks</span><span>💷 £360</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=60" alt="Blockchain">
+        <div class="course-body">
+          <span class="badge">Future</span>
+          <h3>Blockchain Basics & Crypto</h3>
+          <p>Understand Bitcoin, Ethereum & smart contracts.</p>
+          <div class="meta"><span>📆 4 weeks</span><span>💷 £200</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=800&q=60" alt="Etsy">
+        <div class="course-body">
+          <span class="badge">Handmade</span>
+          <h3>Etsy Store Setup</h3>
+          <p>List handmade items, SEO & international shipping.</p>
+          <div class="meta"><span>📆 3 weeks</span><span>💷 £100</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Trading">
+        <div class="course-body">
+          <span class="badge">Finance</span>
+          <h3>Forex & Crypto Trading</h3>
+          <p>Technical analysis, risk & psychology for beginners.</p>
+          <div class="meta"><span>📆 6 weeks</span><span>💷 £250</span></div>
+          <a href="#enroll" class="btn">Apply Now →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =================  CTA  ================= -->
+  <section class="cta">
+    <h2>Ready to Start Earning?</h2>
+    <p>Book a free demo class today and see why 3,000+ students trust E-Comm Tech.</p>
+    <a href="#enroll" class="btn-white">Get Free Demo</a>
+  </section>
+
+  <!-- =================  FOOTER  ================= -->
+  <footer id="contact">
+    <div class="footer-grid">
+      <div>
+        <h4>Quick Links</h4>
+        <ul style="list-style:none;line-height:2;">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Course Links</h4>
+        <ul style="list-style:none;line-height:2;">
+          <li><a href="#">IELTS</a></li>
+          <li><a href="#">LanguageCert</a></li>
+          <li><a href="#">Digital Marketing</a></li>
+          <li><a href="#">E-Commerce</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Details</h4>
+        <p><i class="fa-brands fa-whatsapp"></i> +92 300 1234567</p>
+        <p><i class="fa-solid fa-envelope"></i> info@ecommtech.pk</p>
+        <p><i class="fa-solid fa-location-dot"></i> Main Boulevard, Gulberg, Lahore</p>
+        <div class="social">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar">© <span id="yr"></span> E-Comm Tech. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('mobileDrawer');
+    const closeDrawerBtn = document.getElementById('closeDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.onclick = openDrawer;
+    closeDrawerBtn.onclick = closeDrawer;
+    overlay.onclick = closeDrawer;
+
+    // Close drawer when clicking on links
+    document.querySelectorAll('.mobile-drawer a').forEach(link => {
+      link.onclick = closeDrawer;
+    });
+
+    // Close user dropdown when clicking outside
+    window.addEventListener('click', e => {
+      if (!e.target.closest('.user-menu')) {
+        document.querySelector('.user-dropdown').classList.remove('show');
+      }
+    });
+
+    // Close drawer on window resize if above mobile breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeDrawer();
+      }
+    });
+
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

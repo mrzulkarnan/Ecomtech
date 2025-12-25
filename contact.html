@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact – E-Comm Tech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --dark: #000;
+      --primary: #0066ff;
+      --primary-dark: #004fd0;
+      --text: #111;
+      --muted: #555;
+      --bg-light: #f7f9ff;
+      --white: #ffffff;
+      --shadow: 0 8px 32px rgba(0, 0, 0, .1);
+      --transition: .4s ease;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',system-ui,sans-serif;color:var(--text);line-height:1.6;background:var(--bg-light);overflow-x:hidden;}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .container{width:90%;max-width:1200px;margin:auto}
+    section{padding:4rem 0}
+    h1,h2,h3{font-weight:700;line-height:1.2;margin-bottom:1rem}
+    h2{font-size:clamp(1.5rem,4vw,2.25rem);text-align:center;margin-bottom:3rem}
+    .btn{display:inline-block;background:var(--primary);color:#fff;padding:.75rem 1.5rem;border-radius:30px;font-weight:600;transition:var(--transition)}
+    .btn:hover{background:var(--primary-dark)}
+    .reveal{opacity:0;transform:translateY(30px);transition:.6s}
+    .reveal.active{opacity:1;transform:translateY(0)}
+
+    /* ---------- DESKTOP NAVBAR – ORIGINAL ---------- */
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:var(--white);
+      box-shadow:var(--shadow);
+      transition:background .4s;
+    }
+    header.scrolled{background:var(--white);box-shadow:var(--shadow)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+    .logo-wrap{display:flex;flex-direction:column}
+    .logo{font-size:1.5rem;font-weight:700;color:var(--primary)}
+    .tagline{font-size:.75rem;color:var(--muted)}
+    .nav-links{display:flex;align-items:center;gap:1.5rem;font-weight:600}
+    .nav-links a{font-weight:600;transition:var(--transition)}
+    .nav-links a:hover{color:var(--primary)}
+    .auth-links{display:flex;align-items:center;gap:.75rem;margin-left:1.5rem}
+
+    /* ---------- MOBILE HAMBURGER – WHITE ---------- */
+    .hamburger{
+      display:none;
+      font-size:1.3rem;
+      cursor:pointer;
+      background:var(--white);
+      color:var(--primary);
+      width:45px;height:45px;
+      border-radius:50%;
+      align-items:center;justify-content:center;
+      transition:var(--transition);
+      box-shadow:0 2px 8px rgba(0,0,0,.1);
+      border:1px solid rgba(0,0,0,.1);
+    }
+    .hamburger:hover{background:var(--bg-light);transform:scale(1.05)}
+
+    .user-menu{position:relative;margin-left:auto}
+    .user-btn{background:none;border:none;font-size:.9rem;font-weight:600;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:.3rem;transition:var(--transition)}
+    .user-btn:hover{color:var(--primary)}
+    .user-dropdown{position:absolute;right:0;top:110%;background:var(--white);border-radius:8px;box-shadow:var(--shadow);padding:.5rem 0;min-width:160px;display:none;z-index:200}
+    .user-dropdown.show{display:block}
+    .user-dropdown a,.logout-btn{display:block;padding:.5rem 1rem;font-size:.9rem;text-align:left;background:none;border:none;width:100%;cursor:pointer;color:var(--text);transition:var(--transition)}
+    .user-dropdown a:hover,.logout-btn:hover{background:var(--bg-light)}
+
+    /* ---------- MOBILE DRAWER – WHITE ---------- */
+    .mobile-drawer{
+      position:fixed;inset:0 0 0 auto;width:280px;background:var(--white);box-shadow:-4px 0 20px rgba(0,0,0,.15);
+      display:flex;flex-direction:column;padding:2rem;transform:translateX(100%);transition:transform var(--transition);z-index:150;
+    }
+    .mobile-drawer.open{transform:translateX(0)}
+    .mobile-drawer-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid #e5e7eb}
+    .mobile-drawer-logo{font-weight:700;font-size:1.2rem;color:var(--primary)}
+    .close-drawer{background:var(--bg-light);border:none;font-size:1.5rem;cursor:pointer;color:#666;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+    .close-drawer:hover{background:var(--primary);color:var(--white)}
+    .mobile-drawer a{margin:.8rem 0;text-decoration:none;color:var(--text);font-weight:600;padding:.75rem 1rem;border-radius:8px;transition:var(--transition);background:var(--bg-light)}
+    .mobile-drawer a:hover{background:var(--primary);color:var(--white);transform:translateX(5px)}
+    .mobile-user{margin-top:auto;padding-top:1.5rem;border-top:1px solid #e5e7eb;font-size:.9rem}
+    .mobile-user>div{margin-top:.5rem}
+    .mobile-user a,.mobile-user .logout-btn{padding:.5rem 0;font-size:.9rem;background:none;border:none;color:var(--text);cursor:pointer;transition:var(--transition)}
+    .mobile-user a:hover,.mobile-user .logout-btn:hover{color:var(--primary)}
+    @media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+    /* ---------- OVERLAY ---------- */
+    .drawer-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:149;opacity:0;visibility:hidden;transition:var(--transition)}
+    .drawer-overlay.active{opacity:1;visibility:visible}
+
+    /* ---------- PAGE HERO ---------- */
+    .page-hero{background:linear-gradient(120deg,#66a6ff 0%,#004e92 100%);color:#fff;padding:5rem 0 3rem;text-align:center;min-height:60vh;display:flex;align-items:center;justify-content:center}
+    @media(max-width:768px){.page-hero{padding:4rem 0 2rem;min-height:50vh}}
+
+    /* ---------- CONTACT SECTIONS ---------- */
+    .contact-section{padding:4rem 0}@media(max-width:768px){.contact-section{padding:3rem 0}}
+    .contact-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem}
+    .info-card{background:var(--white);padding:1.5rem;border-radius:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:1rem;transition:var(--transition)}
+    .info-card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
+    .info-card i{font-size:1.4rem;color:var(--primary);min-width:24px}
+    .info-card a{color:var(--primary);font-weight:600;transition:var(--transition)}.info-card a:hover{color:var(--primary-dark)}
+    .social-bar{display:flex;gap:1rem;margin-top:.5rem}
+    .social-bar a{display:grid;place-items:center;width:40px;height:40px;background:var(--primary);border-radius:50%;transition:var(--transition)}
+    .social-bar a i{color:#fff;font-size:1.2rem}
+    .social-bar a:hover{background:var(--primary-dark);transform:translateY(-2px)}
+    .map-wrap{position:relative;padding-bottom:56%;height:0;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);margin:2rem 0}
+    .map-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+    .cta{background:var(--primary);color:#fff;text-align:center;border-radius:20px;margin:3rem 0;padding:4rem 1rem}
+    @media(max-width:768px){.cta{margin:2rem 0;padding:3rem 1rem}}
+
+    /* ---------- FOOTER ---------- */
+    footer{background:var(--dark);color:#fff;display:flex;justify-content:center;margin-top:3rem}@media(max-width:768px){footer{margin-top:2rem}}
+    .footer-inner{width:100%;max-width:1200px;padding:3rem 1rem 1rem}@media(max-width:768px){.footer-inner{padding:2rem 1rem 1rem}}
+    .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-bottom:2rem}@media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:1.5rem}}
+    .footer-grid h4{margin-bottom:.8rem;font-size:1rem}
+    .footer-grid ul{list-style:none;line-height:2}
+    .footer-grid a{color:#ccc;transition:color .3s}.footer-grid a:hover{color:var(--primary)}
+    .social{display:flex;gap:1rem;margin-top:1rem}
+    .social a{color:#fff;font-size:1.2rem;transition:color .3s}.social a:hover{color:var(--primary)}
+    .footer-bar{text-align:center;font-size:.8rem;color:#aaa;border-top:1px solid #333;padding-top:1rem;margin-top:2rem}
+
+    .drawer-overlay{display:none !important;}
+  </style>
+</head>
+<body>
+
+<!-- ========== DESKTOP ORIGINAL | MOBILE WHITE NAVBAR ========== -->
+<header id="header">
+  <div class="container nav">
+    <div class="logo-wrap">
+      <div class="logo">E-Comm Tech</div>
+      <div class="tagline">Professional Skills for a Digital Future</div>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="dashboard.html">Home</a>
+      <a href="cource-details.html">Courses</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+
+      <div class="user-menu">
+        <button class="user-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+          <i class="fa-solid fa-circle-user"></i> User Name <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="user-dropdown">
+          <a href="#">Profile</a>
+          <button class="logout-btn">Log Out</button>
+        </div>
+      </div>
+      <a href="index.html#apply" class="btn">Apply Now</a>
+    </nav>
+    <div class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></div>
+  </div>
+
+  <!-- Mobile Drawer – White Background -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-logo">E-Comm Tech</div>
+      <button class="close-drawer" id="closeDrawer"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <a href="dashboard.html" onclick="closeDrawer()">Home</a>
+    <a href="cource-details.html" onclick="closeDrawer()">Courses</a>
+    <a href="services.html" onclick="closeDrawer()">Services</a>
+    <a href="about.html" onclick="closeDrawer()">About</a>
+    <a href="contact.html" onclick="closeDrawer()">Contact</a>
+    <a href="index.html#apply" class="btn" style="margin:1rem 0;text-align:center;" onclick="closeDrawer()">Apply Now</a>
+    <div class="mobile-user">
+      <div><i class="fa-solid fa-circle-user"></i> User Name</div>
+      <div style="margin-top:.5rem">
+        <a href="#">Profile</a><br>
+        <button class="logout-btn">Log Out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- ========== PAGE HERO ========== -->
+<section class="page-hero reveal">
+  <div class="container">
+    <h1>Contact E-Comm Tech</h1>
+    <p>Reach out any time—we're here to help.</p>
+  </div>
+</section>
+
+<!-- ========== CONTACT INFO + SOCIAL ========== -->
+<section class="contact-section">
+  <div class="container reveal">
+    <h2>Our Contact Details</h2>
+    <div class="contact-info">
+      <div class="info-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <strong>Campus Address</strong><br>
+          Main Boulevard, Gulberg, Lahore, Pakistan
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fa-brands fa-whatsapp"></i>
+        <div>
+          <strong>WhatsApp</strong><br>
+          <a href="https://wa.me/923001234567" target="_blank">+92 300 1234567</a>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-envelope"></i>
+        <div>
+          <strong>Email</strong><br>
+          <a href="mailto:info@ecommtech.pk">info@ecommtech.pk</a>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <strong>Office Hours</strong><br>
+          Mon – Sat 09:00 – 18:00
+        </div>
+      </div>
+      <div class="info-card" style="background:none;box-shadow:none;padding:0">
+        <div class="social-bar">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAP ========== -->
+<section style="background:var(--bg-light);padding-top:3rem">
+  <div class="container reveal">
+    <h2>Find Us</h2>
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3403.5532563159425!2d74.30859531511534!3d31.450366281394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391901e21d3b9e37%3A0x87ebf5f11e1b7c22!2sGulberg%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1672345678909" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta reveal">
+  <div class="container" style="text-align:center">
+    <h2>Ready to Upgrade Your Skills & Career?</h2>
+    <a href="index.html#apply" class="btn">Enroll Now</a>
+    <a href="index.html#contact" class="btn" style="background:transparent;color:#fff;border:2px solid #fff;margin-left:1rem">Talk to an Advisor</a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#courses">Courses</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Course Links</h4>
+        <ul>
+          <li><a href="#">IELTS</a></li>
+          <li><a href="#">LanguageCert</a></li>
+          <li><a href="#">Digital Marketing</a></li>
+          <li><a href="#">E-Commerce</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Details</h4>
+        <p><i class="fa-brands fa-whatsapp"></i> +92 300 1234567</p>
+        <p><i class="fa-solid fa-envelope"></i> info@ecommtech.pk</p>
+        <p><i class="fa-solid fa-location-dot"></i> Main Boulevard, Gulberg, Lahore</p>
+        <div class="social">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar">© <span id="yr"></span> E-Comm Tech. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* ---------- ULTRA-MINIMAL DRAWER ---------- */
+const drawer = document.getElementById('mobileDrawer');
+const hamburger = document.getElementById('hamburger');
+const closeBtn = document.getElementById('closeDrawer');
+
+function toggleDrawer(open) {
+  drawer.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+hamburger.onclick = () => toggleDrawer(true);
+closeBtn.onclick = () => toggleDrawer(false);
+
+/* close when any link inside drawer is tapped */
+drawer.querySelectorAll('a').forEach(a => a.onclick = () => toggleDrawer(false));
+
+/* auto-close on desktop resize */
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) toggleDrawer(false);
+});
+
+/* ---------- REST (unchanged) ---------- */
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+});
+window.addEventListener('click', e => {
+  if (!e.target.closest('.user-menu')) document.querySelector('.user-dropdown').classList.remove('show');
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => entry.target.classList.toggle('active', entry.isIntersecting));
+}, { threshold: .2 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

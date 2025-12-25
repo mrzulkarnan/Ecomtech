@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Services – E-Comm Tech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #004fd0;
+            --text: #111;
+            --muted: #555;
+            --bg-light: #f7f9ff;
+            --white: #ffffff;
+            --shadow: 0 8px 32px rgba(0, 0, 0, .1);
+            --radius: 16px;
+            --transition: .4s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, sans-serif
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: .75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition)
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px)
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto
+        }
+
+        section {
+            padding: 5rem 0
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem)
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            text-align: center;
+            margin-bottom: 3rem
+        }
+
+        h3 {
+            font-size: 1.1rem
+        }
+
+        /* ---------- NEW MOBILE-FIRST NAVBAR ---------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, .2);
+            transition: background .4s
+        }
+
+        header.scrolled {
+            background: var(--white);
+            box-shadow: var(--shadow)
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0
+        }
+
+        .logo-wrap {
+            display: flex;
+            flex-direction: column
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary)
+        }
+
+        .tagline {
+            font-size: .75rem;
+            color: var(--muted)
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-weight: 600
+        }
+
+        .auth-links {
+            display: flex;
+            gap: .75rem;
+            margin-left: 1.5rem
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .hamburger:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .user-menu {
+            position: relative;
+            margin-left: auto
+        }
+
+        .user-btn {
+            background: none;
+            border: none;
+            font-size: .9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: .3rem
+        }
+
+        .user-dropdown {
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: .5rem 0;
+            min-width: 160px;
+            display: none;
+            z-index: 200
+        }
+
+        .user-dropdown.show {
+            display: block
+        }
+
+        .user-dropdown a,
+        .logout-btn {
+            display: block;
+            padding: .5rem 1rem;
+            font-size: .9rem;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer
+        }
+
+        .logout-btn:hover,
+        .user-dropdown a:hover {
+            background: var(--bg-light)
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            inset: 0 0 0 auto;
+            width: 280px;
+            background: var(--white);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, .15);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            transform: translateX(100%);
+            transition: transform var(--transition);
+            z-index: 150;
+        }
+
+        .mobile-drawer.open {
+            transform: translateX(0)
+        }
+
+        .mobile-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .mobile-drawer-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .close-drawer {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-drawer:hover {
+            background: var(--bg-light);
+            color: var(--text);
+        }
+
+        .mobile-drawer a {
+            margin: .8rem 0;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            padding: .5rem 0;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .mobile-drawer a:hover {
+            background: var(--bg-light);
+            color: var(--primary);
+            padding-left: .5rem;
+        }
+
+        .mobile-user {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            font-size: .9rem
+        }
+
+        .mobile-user > div {
+            margin-top: .5rem;
+        }
+
+        .mobile-user a,
+        .mobile-user .logout-btn {
+            padding: .4rem 0;
+            font-size: .9rem;
+        }
+
+        @media(max-width:768px) {
+            .nav-links {
+                display: none
+            }
+
+            .hamburger {
+                display: flex
+            }
+        }
+
+        /* ---------- DRAWER OVERLAY ---------- */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 149;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            min-height: 70vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 50%, #004e92 100%);
+            background-size: 300% 300%;
+            animation: gradientBG 12s ease infinite;
+            color: #fff;
+            padding: 2rem 0;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+
+        .hero-grid {
+            display: grid;
+            gap: 2rem;
+            align-items: center
+        }
+
+        @media(min-width:768px) {
+            .hero-grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap
+        }
+
+        .type-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #fff;
+            animation: blink 1s infinite
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        /* ---------- SERVICES INTRO ---------- */
+        .intro {
+            text-align: center;
+            max-width: 700px;
+            margin: auto;
+            padding: 4rem 0;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            color: var(--muted)
+        }
+
+        @media(max-width: 768px) {
+            .intro {
+                padding: 3rem 0;
+            }
+        }
+
+        /* ---------- SERVICE CATEGORIES ---------- */
+        .cat-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))
+        }
+
+        .cat-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition)
+        }
+
+        .cat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .15)
+        }
+
+        .cat-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem
+        }
+
+        .cat-card h3 {
+            margin-bottom: .5rem
+        }
+
+        @media(max-width: 768px) {
+            .cat-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* ---------- SERVICE DETAILS ---------- */
+        .service-list {
+            display: grid;
+            gap: 2rem
+        }
+
+        .service-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: var(--transition)
+        }
+
+        .service-item:hover {
+            transform: translateY(-4px)
+        }
+
+        .service-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover
+        }
+
+        .service-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .service-content h3 {
+            margin-bottom: .5rem
+        }
+
+        .service-content p {
+            color: var(--muted);
+            flex: 1;
+            margin-bottom: 1.25rem
+        }
+
+        .service-content .btn {
+            align-self: flex-start
+        }
+
+        @media(min-width:600px) {
+            .service-item {
+                flex-direction: row
+            }
+
+            .service-img {
+                width: 260px;
+                height: auto
+            }
+        }
+
+        @media(max-width: 768px) {
+            .service-list {
+                gap: 1.5rem;
+            }
+            
+            .service-content {
+                padding: 1.25rem;
+            }
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 3rem 0 1rem
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1rem
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem
+        }
+
+        .footer-grid h4 {
+            margin-bottom: .8rem;
+            font-size: 1rem
+        }
+
+        .footer-grid ul {
+            list-style: none;
+            line-height: 2
+        }
+
+        .footer-grid a {
+            color: #ccc;
+            transition: color .3s
+        }
+
+        .footer-grid a:hover {
+            color: var(--primary)
+        }
+
+        .social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem
+        }
+
+        .social a {
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color .3s
+        }
+
+        .social a:hover {
+            color: var(--primary)
+        }
+
+        .footer-bar {
+            text-align: center;
+            font-size: .8rem;
+            color: #aaa;
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+            margin-top: 2rem
+        }
+
+        @media(max-width: 768px) {
+            footer {
+                padding: 2rem 0 1rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* ---------- SECTION PADDING ADJUSTMENTS ---------- */
+        section {
+            padding: 4rem 0;
+        }
+
+        @media(max-width: 768px) {
+            section {
+                padding: 3rem 0;
+            }
+        }
+
+        /* ---------- REVIEW ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ========== DESKTOP ORIGINAL | MOBILE WHITE NAVBAR ========== -->
+<header id="header">
+  <div class="container nav">
+    <div class="logo-wrap">
+      <div class="logo">E-Comm Tech</div>
+      <div class="tagline">Professional Skills for a Digital Future</div>
+    </div>
+    <nav class="nav-links">
+      <a href="dashboard.html">Home</a>
+      <a href="cource-details.html">Courses</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <div class="user-menu">
+        <button class="user-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+          <i class="fa-solid fa-circle-user"></i> User Name <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="user-dropdown">
+          <a href="#">Profile</a>
+          <form method="POST" action="#" style="margin:0"><button class="logout-btn">Log Out</button></form>
+        </div>
+      </div>
+      <a href="applynowpage.html" class="btn">Apply Now</a>
+    </nav>
+    <div class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></div>
+  </div>
+
+  <!-- Mobile Drawer – White Background -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-logo">E-Comm Tech</div>
+      <button class="close-drawer" id="closeDrawer"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <a href="dashboard.html" onclick="closeDrawer()">Home</a>
+    <a href="cource-details.html" onclick="closeDrawer()">Courses</a>
+    <a href="services.html" onclick="closeDrawer()">Services</a>
+    <a href="about.html" onclick="closeDrawer()">About</a>
+    <a href="contact.html" onclick="closeDrawer()">Contact</a>
+    <a href="applynowpage.html" class="btn" style="margin:1rem 0;text-align:center" onclick="closeDrawer()">Apply Now</a>
+    <div class="mobile-user">
+      <div><i class="fa-solid fa-circle-user"></i> User Name</div>
+      <div style="margin-top:.5rem">
+        <a href="#">Profile</a><br>
+        <form method="POST" action="#" style="margin:0"><button class="logout-btn">Log Out</button></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Overlay outside header -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- ---------- HERO ---------- -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <h1><span id="typeWrap"></span><span class="type-cursor"></span></h1>
+                    <p>End-to-end digital solutions: Amazon stores, marketing funnels, web development & more.</p>
+                    <div class="hero-btns">
+                        <a href="#services" class="btn">Explore Services</a>
+                        <a href="#contact" class="btn" style="background:transparent;color:#fff;border:2px solid #fff;">Get Quote</a>
+                    </div>
+                </div>
+                <div><img src="https://images.unsplash.com/photo-1581092795360-7267786b62c6?auto=format&fit=crop&w=800&q=60" alt="Services"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------- INTRO ---------- -->
+    <section class="intro reveal">
+        <h2>One-Stop Digital Growth Hub</h2>
+        <p>From brand identity to global sales channels, we build, optimize & scale your online presence—while you focus on your core business.</p>
+    </section>
+
+    <!-- ---------- CATEGORIES ---------- -->
+    <section class="reveal">
+        <div class="container">
+            <h2>Service Categories</h2>
+            <div class="cat-grid">
+                <div class="cat-card"><i class="fa-solid fa-store"></i>
+                    <h3>E-Commerce</h3>
+                    <p>Amazon, Shopify, Etsy setup & optimisation</p>
+                </div>
+                <div class="cat-card"><i class="fa-solid fa-bullhorn"></i>
+                    <h3>Marketing</h3>
+                    <p>SEO, Google/Meta ads & funnels that convert</p>
+                </div>
+                <div class="cat-card"><i class="fa-solid fa-code"></i>
+                    <h3>Development</h3>
+                    <p>Websites, apps & automations built for speed</p>
+                </div>
+                <div class="cat-card"><i class="fa-solid fa-palette"></i>
+                    <h3>Creative</h3>
+                    <p>Branding, graphics & videos that sell</p>
+                </div>
+                <div class="cat-card"><i class="fa-solid fa-handshake-angle"></i>
+                    <h3>Consulting</h3>
+                    <p>Strategy, audits & 1-on-1 mentoring</p>
+                </div>
+                <div class="cat-card"><i class="fa-solid fa-graduation-cap"></i>
+                    <h3>Training</h3>
+                    <p>Up-skill your team with latest tools</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------- FULL SERVICE LIST ---------- -->
+    <section id="services" class="reveal">
+        <div class="container">
+            <h2>All Services</h2>
+            <div class="service-list">
+
+                <!-- 1 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed358f00a?auto=format&fit=crop&w=800&q=60" alt="Amazon" class="service-img">
+                    <div class="service-content">
+                        <h3>Amazon FBA Private-Label Launch</h3>
+                        <p>Product research, sourcing, branding, listing SEO, PPC & account health—A-Z hand-off in 8 weeks.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=60" alt="Marketing" class="service-img">
+                    <div class="service-content">
+                        <h3>Performance Marketing</h3>
+                        <p>Google Ads, Facebook/Instagram & TikTok campaigns optimised for ROAS > 4 within 60 days.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1517430816045-df4b7de111b2?auto=format&fit=crop&w=800&q=60" alt="SEO" class="service-img">
+                    <div class="service-content">
+                        <h3>Technical SEO & Content</h3>
+                        <p>Site audits, schema, Core-Web-Vitals, keyword clustering & link-building that moves the needle.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 4 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1584697964199-7383bb4f6c55?auto=format&fit=crop&w=800&q=60" alt="Web-Dev" class="service-img">
+                    <div class="service-content">
+                        <h3>Web & E-Comm Development</h3>
+                        <p>Speed-first WordPress, Shopify, WooCommerce or custom React/Node builds with 90+ PageSpeed.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 5 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=60" alt="Branding" class="service-img">
+                    <div class="service-content">
+                        <h3>Brand Identity Pack</h3>
+                        <p>Logo, palette, typography, social kit & brand guidelines delivered in 7 days.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 6 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=800&q=60" alt="Photography" class="service-img">
+                    <div class="service-content">
+                        <h3>Product Photography</h3>
+                        <p>Light-box, lifestyle & 360° spins optimised for Amazon, Etsy & Instagram shops.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 7 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=60" alt="Copy" class="service-img">
+                    <div class="service-content">
+                        <h3>Conversion Copywriting</h3>
+                        <p>Emails, landing pages & ad creatives that speak customer language and sell.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+                <!-- 8 -->
+                <div class="service-item">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=60" alt="HR" class="service-img">
+                    <div class="service-content">
+                        <h3>HR & Payroll Automation</h3>
+                        <p>Setup QuickBooks, Odoo or custom apps to cut admin time by 70 %.</p>
+                        <a href="#" class="btn">Get Quote</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ---------- CTA ---------- -->
+    <section class="reveal">
+        <div class="container" style="text-align:center">
+            <h2>Ready to Scale?</h2>
+            <p>Book a free 30-min strategy call and get a tailored action plan.</p>
+            <a href="#contact" class="btn">Book Free Call</a>
+        </div>
+    </section>
+
+    <!-- ---------- FOOTER ---------- -->
+    <footer id="contact">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Popular Services</h4>
+                    <ul>
+                        <li><a href="#">Amazon FBA</a></li>
+                        <li><a href="#">Google Ads</a></li>
+                        <li><a href="#">SEO</a></li>
+                        <li><a href="#">Web Development</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact Details</h4>
+                    <p><i class="fa-brands fa-whatsapp"></i> +92 300 1234567</p>
+                    <p><i class="fa-solid fa-envelope"></i> info@ecommtech.pk</p>
+                    <p><i class="fa-solid fa-location-dot"></i> Main Boulevard, Gulberg, Lahore</p>
+                    <div class="social">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bar">© <span id="yr"></span> E-Comm Tech. All rights reserved.</div>
+        </div>
+    </footer>
+
+  <script>
+/* ---------- DRAWER TOGGLE ---------- */
+const drawer = document.getElementById('mobileDrawer');
+const overlay = document.getElementById('drawerOverlay');
+
+function toggleDrawer(open) {
+  drawer.classList.toggle('open', open);
+  overlay.classList.toggle('active', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+document.getElementById('hamburger').onclick = () => toggleDrawer(true);
+document.getElementById('closeDrawer').onclick = () => toggleDrawer(false);
+overlay.onclick = () => toggleDrawer(false);
+
+/* close on link tap */
+drawer.querySelectorAll('a').forEach(a => a.onclick = () => toggleDrawer(false));
+
+/* desktop reset */
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) toggleDrawer(false);
+});
+
+/* ---------- REST (unchanged) ---------- */
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+});
+window.addEventListener('click', e => {
+  if (!e.target.closest('.user-menu')) document.querySelector('.user-dropdown').classList.remove('show');
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => entry.target.classList.toggle('visible', entry.isIntersecting));
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

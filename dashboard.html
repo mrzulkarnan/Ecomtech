@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Comm Tech – Animated</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --dark: #000;
+      --primary: #0066ff;
+      --primary-dark: #004fd0;
+      --text: #111;
+      --muted: #555;
+      --bg-light: #f7f9ff;
+      --white: #ffffff;
+      --shadow: 0 8px 32px rgba(0, 0, 0, .1);
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gradient-bg {
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 50%, #004e92 100%);
+      background-size: 300% 300%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: var(--bg-light);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    section {
+      padding: 3rem 0;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* ---------- DESKTOP NAVBAR – ORIGINAL ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: all .4s;
+    }
+
+    header.scrolled {
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      position: relative;
+    }
+
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .tagline {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text);
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .auth-links {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-left: 1.5rem;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+      z-index: 1001;
+    }
+
+    .user-menu {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .user-btn {
+      background: none;
+      border: none;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      right: 0;
+      top: 110%;
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: .5rem 0;
+      min-width: 160px;
+      display: none;
+      z-index: 200;
+    }
+
+    .user-dropdown.show {
+      display: block;
+    }
+
+    .user-dropdown a,
+    .logout-btn {
+      display: block;
+      padding: .5rem 1rem;
+      font-size: .9rem;
+      text-align: left;
+      background: none;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .logout-btn:hover,
+    .user-dropdown a:hover {
+      background: var(--bg-light);
+    }
+
+    /* ---------- MOBILE DRAWER – WHITE BACKGROUND ---------- */
+    .mobile-drawer {
+      display: none;
+      flex-direction: column;
+      background: var(--white);
+      position: fixed;
+      inset: 0 0 0 30%;
+      padding: 2rem;
+      z-index: 150;
+      transform: translateX(100%);
+      transition: .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-drawer.open {
+      transform: translateX(0);
+      display: flex;
+    }
+
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-drawer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .close-drawer {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .mobile-drawer a {
+      padding: 1rem 0;
+      font-weight: 600;
+      color: var(--text);
+      transition: color 0.3s;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-drawer a:hover {
+      color: var(--primary);
+    }
+
+    .mobile-user {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .mobile-user > div {
+      margin-top: 1rem;
+    }
+
+    .mobile-user a {
+      display: inline-block;
+      margin-right: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-light);
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 149;
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .mobile-drawer {
+        inset: 0 0 0 20%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mobile-drawer {
+        inset: 0 0 0 10%;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .tagline {
+        font-size: 0.65rem;
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding-top: 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+      }
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+      .hero-btns {
+        justify-content: flex-start;
+      }
+    }
+
+    .type-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: #fff;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* ---------- TRUST ---------- */
+    .trust-inner {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .trust-inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .trust-inner {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    .trust-item i {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: .5rem;
+    }
+
+    /* ---------- STATS ---------- */
+    .stats-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #ffffff 0%, #f0f4ff 100%);
+      padding: 2rem 1rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      transition: transform .3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .stat-card h3 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: .5rem;
+    }
+
+    /* ---------- COURSES ---------- */
+    .course-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    @media (max-width: 768px) {
+      .course-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .course-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .15);
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .course-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .course-body h3 {
+      margin-bottom: .5rem;
+    }
+
+    .course-body p {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .course-body .btn {
+      align-self: flex-start;
+    }
+
+    /* ---------- WHY ---------- */
+    .why-grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .why-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .why-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .why-list li {
+      list-style: none;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+
+    .why-list i {
+      color: var(--primary);
+      margin-top: .2rem;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .service-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    @media (max-width: 768px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .service-card {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: linear-gradient(145deg, #ffffff 0%, #f0f4ff 100%);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      transition: transform .3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .service-card i {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      border-radius: 20px;
+      margin: 3rem 0;
+      padding: 4rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .cta {
+        margin: 2rem 0;
+        padding: 3rem 1rem;
+      }
+
+      .cta h2 {
+        font-size: 1.8rem;
+      }
+
+      .cta a {
+        display: block !important;
+        margin: 0.5rem 0 !important;
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, .2) 0%, transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(.8);
+        opacity: .5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-item {
+      background: linear-gradient(145deg, #ffffff 0%, #f0f4ff 100%);
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+      overflow: hidden;
+      transition: transform .3s;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s;
+      padding: 0 1.5rem;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+
+    .faq-item i {
+      transition: transform .3s;
+    }
+
+    .faq-item.open i {
+      transform: rotate(180deg);
+    }
+
+    /* ---------- TESTIMONIALS ---------- */
+    .testimonials {
+      background: var(--bg-light);
+    }
+
+    .test-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    @media (max-width: 768px) {
+      .test-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .test-card {
+      background: rgba(255, 255, 255, .5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, .3);
+      padding: 2rem;
+      border-radius: 16px;
+      font-style: italic;
+      box-shadow: var(--shadow);
+      transition: transform .3s;
+    }
+
+    .test-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .test-card .name {
+      text-align: right;
+      margin-top: 1rem;
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    /* ---------- REVEAL ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all .8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--dark);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-inner {
+      width: 100%;
+      max-width: 1200px;
+      padding: 3rem 1rem 1rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+      }
+    }
+
+    .footer-grid h4 {
+      margin-bottom: .8rem;
+      font-size: 1rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      line-height: 2;
+    }
+
+    .footer-grid a {
+      color: #ccc;
+      transition: color .3s;
+    }
+
+    .footer-grid a:hover {
+      color: var(--primary);
+    }
+
+    .social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social a {
+      color: #fff;
+      font-size: 1.2rem;
+      transition: color .3s;
+    }
+
+    .social a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bar {
+      text-align: center;
+      font-size: .8rem;
+      color: #aaa;
+      border-top: 1px solid #333;
+      padding-top: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 1. HEADER – DESKTOP ORIGINAL | MOBILE WHITE ---------- -->
+  <header id="header">
+    <div class="container nav">
+      <div class="logo-wrap">
+        <div class="logo">E-Comm Tech</div>
+        <div class="tagline">Professional Skills for a Digital Future</div>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="dashboard.html">Home</a>
+        <a href="cource-details.html">Courses</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="user-menu">
+          <button class="user-btn" onclick="this.nextElementSibling.classList.toggle('show')">
+            <i class="fa-solid fa-circle-user"></i> User Name <i class="fa-solid fa-caret-down"></i>
+          </button>
+          <div class="user-dropdown">
+            <a href="#profile">Profile</a>
+            <form method="POST" action="#" style="margin:0;">
+              <button type="submit" class="logout-btn">Log Out</button>
+            </form>
+          </div>
+        </div>
+
+        <a href="applynowpage.html" class="btn">Apply Now</a>
+      </nav>
+
+      <div class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></div>
+    </div>
+
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <div class="mobile-drawer-logo">E-Comm Tech</div>
+        <button class="close-drawer" id="closeDrawer"><i class="fa-solid fa-times"></i></button>
+      </div>
+      <a href="dashboard.html" onclick="closeDrawer()">Home</a>
+      <a href="cource-details.html" onclick="closeDrawer()">Courses</a>
+      <a href="services.html" onclick="closeDrawer()">Services</a>
+      <a href="about.html" onclick="closeDrawer()">About</a>
+      <a href="contact.html" onclick="closeDrawer()">Contact</a>
+      <a href="applynowpage.html" onclick="closeDrawer()">Apply Now</a>
+
+      <div class="mobile-user">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+          <i class="fa-solid fa-circle-user"></i> User Name
+        </div>
+        <div>
+          <a href="#profile" onclick="closeDrawer()">Profile</a>
+          <form method="POST" action="#" style="margin:0; display: inline;">
+            <button type="submit" class="logout-btn" style="background: none; border: none; color: var(--muted); cursor: pointer;">Log Out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+  </header>
+
+  <!-- 2. HERO -->
+  <section class="hero gradient-bg" id="home">
+    <div class="container">
+      <div class="hero-grid reveal">
+        <div>
+          <h1><span class="type-wrap" id="typeWrap"></span><span class="type-cursor"></span></h1>
+          <p>IELTS, LanguageCert, Computer Courses, Digital Marketing, E-commerce & Freelancing under one roof.</p>
+          <div class="hero-btns">
+            <a href="#courses" class="btn">Explore Courses</a>
+            <a href="#contact" class="btn" style="background:transparent;color:#fff;border:2px solid #fff;">Free Consultation</a>
+          </div>
+        </div>
+        <div><img src="https://images.unsplash.com/photo/1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60" alt="Students"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TRUST BAR -->
+  <section class="trust reveal">
+    <div class="container">
+      <div class="trust-inner">
+        <div class="trust-item"><i class="fa-solid fa-certificate"></i>
+          <div>Certified Trainers</div>
+        </div>
+        <div class="trust-item"><i class="fa-solid fa-handshake"></i>
+          <div>Practical Learning</div>
+        </div>
+        <div class="trust-item"><i class="fa-solid fa-briefcase"></i>
+          <div>Career-Focused Courses</div>
+        </div>
+        <div class="trust-item"><i class="fa-solid fa-globe"></i>
+          <div>Online & On-Campus Classes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STATS / COUNTER -->
+  <section id="stats" class="reveal">
+    <div class="container">
+      <h2>Our Impact in Numbers</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3 data-target="2500">0</h3>
+          <p>Students Trained</p>
+        </div>
+        <div class="stat-card">
+          <h3 data-target="98">0</h3>
+          <p>Success Rate (%)</p>
+        </div>
+        <div class="stat-card">
+          <h3 data-target="50">0</h3>
+          <p>Partner Companies</p>
+        </div>
+        <div class="stat-card">
+          <h3 data-target="15">0</h3>
+          <p>Expert Trainers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. COURSES -->
+  <section id="courses">
+    <div class="container reveal">
+      <h2>Our Popular Courses</h2>
+      <div class="course-grid">
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1599658880436-c61792e56ff9?auto=format&fit=crop&w=800&q=60" alt="IELTS">
+          <div class="course-body">
+            <h3>IELTS Preparation</h3>
+            <p>8-week intensive coaching for Academic & General modules with mock tests.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=60" alt="LanguageCert">
+          <div class="course-body">
+            <h3>LanguageCert (UK Approved)</h3>
+            <p>4–6-week program for internationally recognized English certification.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1517430816045-df4b7de111b2?auto=format&fit=crop&w=800&q=60" alt="Computer">
+          <div class="course-body">
+            <h3>Basic Computer Course</h3>
+            <p>3-month hands-on training in MS Office, Internet & online tools.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=60" alt="Digital Marketing">
+          <div class="course-body">
+            <h3>Digital Marketing</h3>
+            <p>3-month course covering SEO, Google Ads, social media & analytics.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1556742049-0cfed358f00a?auto=format&fit=crop&w=800&q=60" alt="E-Commerce">
+          <div class="course-body">
+            <h3>E-Commerce (Amazon, Shopify)</h3>
+            <p>3–4-month complete seller training from product research to scaling.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="course-card">
+          <img src="https://images.unsplash.com/photo/1581092795360-7267786b62c6?auto=format&fit=crop&w=800&q=60" alt="Freelancing">
+          <div class="course-body">
+            <h3>Freelancing Skills</h3>
+            <p>2-month step-by-step guide to earn online via Fiverr, Upwork & more.</p>
+            <a href="#" class="btn">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. WHY CHOOSE -->
+  <section>
+    <div class="container reveal">
+      <div class="why-grid">
+        <div><img src="https://images.unsplash.com/photo/1584697964199-7383bb4f6c55?auto=format&fit=crop&w=800&q=60" alt="Classroom"></div>
+        <div>
+          <h2>Why Choose E-Comm Tech?</h2>
+          <ul class="why-list">
+            <li><i class="fa-solid fa-check-circle"></i><span>Industry-relevant curriculum updated every quarter</span></li>
+            <li><i class="fa-solid fa-check-circle"></i><span>Hands-on practical training on real projects</span></li>
+            <li><i class="fa-solid fa-check-circle"></i><span>Beginner to advanced level pathways</span></li>
+            <li><i class="fa-solid fa-check-circle"></i><span>Affordable fee structure with installment plans</span></li>
+            <li><i class="fa-solid fa-check-circle"></i><span>Career guidance & post-training support</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ONLINE SERVICES -->
+  <section id="services">
+    <div class="container reveal">
+      <h2>Online Services</h2>
+      <div class="service-grid">
+        <div class="service-card"><i class="fa-solid fa-store"></i>
+          <h4>Amazon Store Setup</h4>
+          <p>End-to-end seller central support from A-Z.</p>
+        </div>
+        <div class="service-card"><i class="fa-solid fa-bullhorn"></i>
+          <h4>Digital Marketing</h4>
+          <p>Ads, SEO & social media management for ROI.</p>
+        </div>
+        <div class="service-card"><i class="fa-solid fa-code"></i>
+          <h4>Website Development</h4>
+          <p>WordPress, Shopify & custom sites that sell.</p>
+        </div>
+        <div class="service-card"><i class="fa-solid fa-comments"></i>
+          <h4>Online Consultancy</h4>
+          <p>1-on-1 mentoring for business & freelancers.</p>
+        </div>
+        <div class="service-card"><i class="fa-solid fa-handshake-angle"></i>
+          <h4>Freelancing Support</h4>
+          <p>Profile audits, gig creation & pricing help.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section id="faq" class="reveal">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Do I get a certificate after finishing a course? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a">Yes! Every graduate receives an industry-recognized certificate that helps in job applications and freelancing profiles.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I take classes online? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a">Absolutely. All courses are available in both live online and on-campus formats so you can learn from anywhere.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is there any job placement support? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a">We provide CV workshops, LinkedIn make-overs, interview prep and direct referrals to partner companies.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Are there installment plans for the fee? <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="faq-a">Yes, you can split the fee into easy monthly installments at zero extra cost.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. CTA -->
+  <section class="cta reveal">
+    <div class="container">
+      <h2>Ready to Upgrade Your Skills & Career?</h2>
+      <div style="margin-top:2rem;">
+        <a href="#apply" class="btn">Enroll Now</a>
+        <a href="#contact" class="btn" style="background:transparent;color:#fff;border:2px solid #fff;margin-left:1rem;">Talk to an Advisor</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container reveal">
+      <h2>Student Results</h2>
+      <div class="test-grid">
+        <div class="test-card">"I achieved Band 8 in IELTS after the 8-week course. The mock tests were identical to the real exam!"<div class="name">— Ayesha K.</div>
+        </div>
+        <div class="test-card">"My Amazon FBA store hit $5k/month within 4 months of training. Sir's product-research formula is gold."<div class="name">— Hassan M.</div>
+        </div>
+        <div class="test-card">"Zero computer knowledge to office job in 3 months. The basic course is truly for beginners."<div class="name">— Sana I.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. ABOUT -->
+  <section id="about">
+    <div class="container reveal">
+      <div class="about-inner" style="text-align:center;max-width:700px;margin:auto;">
+        <h2>About E-Comm Tech</h2>
+        <p>E-Comm Tech is a professional training institute focused on practical education in English language, IT skills, digital business, and freelancing to help students succeed locally and globally.</p>
+        <a href="#" class="btn" style="margin-top:1.5rem;">Learn More About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. FOOTER -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Course Links</h4>
+          <ul>
+            <li><a href="#">IELTS</a></li>
+            <li><a href="#">LanguageCert</a></li>
+            <li><a href="#">Digital Marketing</a></li>
+            <li><a href="#">E-Commerce</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact Details</h4>
+          <p><i class="fa-brands fa-whatsapp"></i> +92 300 1234567</p>
+          <p><i class="fa-solid fa-envelope"></i> info@ecommtech.pk</p>
+          <p><i class="fa-solid fa-location-dot"></i> Main Boulevard, Gulberg, Lahore</p>
+          <div class="social">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">© <span id="yr"></span> E-Comm Tech. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* ---------- TYPING HERO ---------- */
+      const typeWrap = document.getElementById('typeWrap');
+      if (typeWrap) {
+        const txt = "Learn In-Demand Skills. Build Your Career with Confidence";
+        let i = 0;
+        function typeWriter() {
+          if (i < txt.length) {
+            typeWrap.textContent += txt.charAt(i);
+            i++;
+            setTimeout(typeWriter, 60);
+          }
+        }
+        typeWriter();
+      }
+
+      /* ---------- MOBILE DRAWER ---------- */
+      const hamburger = document.getElementById('hamburger');
+      const drawer = document.getElementById('mobileDrawer');
+      const closeDrawerBtn = document.getElementById('closeDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      function openDrawer() {
+        drawer.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      hamburger.addEventListener('click', openDrawer);
+      closeDrawerBtn.addEventListener('click', closeDrawer);
+      overlay.addEventListener('click', closeDrawer);
+
+      document.querySelectorAll('.mobile-drawer a').forEach(link => {
+        link.addEventListener('click', closeDrawer);
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeDrawer();
+      });
+
+      /* ---------- USER DROPDOWN ---------- */
+      document.addEventListener('click', (e) => {
+        const userBtn = document.querySelector('.user-btn');
+        const userDropdown = document.querySelector('.user-dropdown');
+        if (userBtn && userDropdown) {
+          if (!userBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+            userDropdown.classList.remove('show');
+          }
+        }
+      });
+
+      /* ---------- HEADER SCROLL ---------- */
+      const header = document.getElementById('header');
+      if (header) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
+        });
+      }
+
+      /* ---------- REVEAL ON SCROLL ---------- */
+      const reveals = document.querySelectorAll('.reveal');
+      if (reveals.length) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, { threshold: 0.2 });
+        reveals.forEach(el => observer.observe(el));
+      }
+
+      /* ---------- FAQ ACCORDION ---------- */
+      document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.parentElement.classList.toggle('open');
+        });
+      });
+
+      /* ---------- COUNTER ANIMATION ---------- */
+      const counters = document.querySelectorAll('[data-target]');
+      const speed = 200;
+      const countUp = () => {
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = target / speed;
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(countUp, 10);
+          } else {
+            counter.innerText = target;
+          }
+        });
+      };
+
+      const statsSection = document.querySelector('#stats');
+      if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              countUp();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        observer.observe(statsSection);
+      }
+
+      /* ---------- YEAR ---------- */
+      const yr = document.getElementById('yr');
+      if (yr) yr.textContent = new Date().getFullYear();
+
+    });
+  </script>
+</body>
+</html>
